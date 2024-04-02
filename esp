@@ -1,23 +1,87 @@
--- Variável para armazenar a cor da linha
-local corLinha = Color3.new(1, 0, 0) -- Vermelho
+local surfaceGui = Instance.new("SurfaceGui")
+surfaceGui.Name = "NomeSobreCabeca"
+surfaceGui.AlwaysOnTop = true
+surfaceGui.ResetOnSpawn = false
 
--- Função para adicionar a linha ao corpo do jogador
-function adicionarLinha(jogador)
-    local linha = Instance.new("Part")
-    linha.Parent = jogador.Character
-    linha.Name = "Linha"
-    linha.CFrame = CFrame.new(jogador.Head.Position, jogador.Torso.Position)
-    linha.Size = Vector3.new(0.1, 0.1, jogador.Torso.Position.Y - jogador.Head.Position.Y)
-    linha.BrickColor = corLinha
-    linha.Transparency = 0.5
+local labels = {}
+
+function criarNomeSobreCabeca(jogador)
+  local textLabel = labels[jogador] or Instance.new("TextLabel")
+  textLabel.Name = "Nome"
+  textLabel.Parent = surfaceGui
+  textLabel.BackgroundTransparency = 1
+  textLabel.TextSize = game:GetService("RunService"):IsMobile() and 12 or 14
+  textLabel.TextStrokeTransparency = 0.5
+  textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+  textLabel.TextColor3 = Color3.new(1, 1, 1)
+  textLabel.Font = Enum.Font.SourceSansBold
+  
+  labels[jogador] = textLabel
+  
+  textLabel.Text = jogador.Name
 end
 
--- Loop para adicionar a linha a todos os jogadores
-for _, jogador in pairs(game.Players:GetPlayers()) do
-    adicionarLinha(jogador)
+function atualizarNome(jogador)
+  local textLabel = labels[jogador]
+  
+  while true do
+    wait()
+    
+    if jogador.Name ~= textLabel.Text then
+      textLabel.Text = jogador.Name
+    end
+  end
 end
 
--- Evento para adicionar a linha a novos jogadores que entrarem no jogo
-game.Players.PlayerAdded:Connect(function(jogador)
-    adicionarLinha(jogador)
-end)
+function jogadorAdicionado(jogador)
+  if jogador ~= game:GetService("Players").LocalPlayer then
+    criarNomeSobreCabeca(jogador)
+    atualizarNome(jogador)
+  end
+end
+
+function jogadorRemovido(jogador)
+  local textLabel = labels[jogador]
+  if textLabel then
+    textLabel:Destroy()
+    labels[jogador] = nil
+  end
+end
+
+for _, jogador in ipairs(game:GetService("Players"):GetPlayers()) do
+  if jogador ~= game:GetService("Players").LocalPlayer then
+    criarNomeSobreCabeca(jogador)
+    atualizarNome(jogador)
+  end
+end
+
+game:GetService("Players").PlayerAdded:Connect(jogadorAdicionado)
+game:GetService("Players").PlayerRemoving:Connect(jogadorRemovido)
+
+-- Menu de Configurações (Opcional)
+
+local settingsGui = Instance.new("Frame")
+settingsGui.Name = "Configurações"
+settingsGui.Position = UDim2.new(0.5, 0, 0.5, 0)
+settingsGui.Size = UDim2.new(0, 200, 0, 200)
+settingsGui.Visible = false
+
+-- Adicionar elementos de configuração ao settingsGui (ex: botões para cores, tamanho da fonte)
+
+function mostrarConfiguracoes()
+  settingsGui.Visible = true
+end
+
+function esconderConfiguracoes()
+  settingsGui.Visible = false
+end
+
+-- Atalhos para mostrar/esconder configurações (ex: tecla 'C')
+
+-- Detecção de Dispositivo e Ajuste de Posicionamento
+
+if game:GetService("RunService"):IsMobile() then
+  for _, label in pairs(labels) do
+    label.TextSize = 12
+  end
+end
