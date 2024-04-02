@@ -1074,7 +1074,7 @@ if game.PlaceId == 2753915549 or game.PlaceId == 4442272183 or game.PlaceId == 7
   
   
      
-      local sxhub = library:AddWindow("Proxo | Bloxfruit!",Enum.KeyCode.RightControl)
+      local sxhub = library:AddWindow("Lightz | Bloxfruit!",Enum.KeyCode.RightControl)
       
       local Main = sxhub:AddTab("Main","6026568198")
       local stus = sxhub:AddTab("Auto Stats","7040410130")
@@ -2271,10 +2271,10 @@ if game.PlaceId == 2753915549 or game.PlaceId == 4442272183 or game.PlaceId == 7
   
      local set = sxhub:AddTab("Setting","7040347038")
   set:AddLabel("Setting")
-      set:AddButton("Credit By Sintax#4976",function()
+      set:AddButton("Credit By Lightᶻᵃᶜᵃʳⁱᵃˢ",function()
   end)
-      set:AddButton("Copy link Proxo Discord ",function()
-      setclipboard("https://discord.gg/3SNUUvcaxP")
+      set:AddButton("Copy link Lightz hub Discord ",function()
+      setclipboard("https://discord.gg/xRBvtwHB")
   end)
       set:AddButton("Hop Lower Server",function()
       HopLowerServer()
