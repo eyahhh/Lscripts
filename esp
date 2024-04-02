@@ -1,0 +1,23 @@
+-- Variável para armazenar a cor da linha
+local corLinha = Color3.new(1, 0, 0) -- Vermelho
+
+-- Função para adicionar a linha ao corpo do jogador
+function adicionarLinha(jogador)
+    local linha = Instance.new("Part")
+    linha.Parent = jogador.Character
+    linha.Name = "Linha"
+    linha.CFrame = CFrame.new(jogador.Head.Position, jogador.Torso.Position)
+    linha.Size = Vector3.new(0.1, 0.1, jogador.Torso.Position.Y - jogador.Head.Position.Y)
+    linha.BrickColor = corLinha
+    linha.Transparency = 0.5
+end
+
+-- Loop para adicionar a linha a todos os jogadores
+for _, jogador in pairs(game.Players:GetPlayers()) do
+    adicionarLinha(jogador)
+end
+
+-- Evento para adicionar a linha a novos jogadores que entrarem no jogo
+game.Players.PlayerAdded:Connect(function(jogador)
+    adicionarLinha(jogador)
+end)
