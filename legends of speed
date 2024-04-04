@@ -3,52 +3,35 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 local Window = OrionLib:MakeWindow({Name = "Lightz Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "lightSave"})
 
 local FarmTab = Window:MakeTab({
-	Name = "AutoFarm ",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
+    Name = "AutoFarm ",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
 })
 
 wait(6)
 OrionLib:MakeNotification({
-	Name = "SCRIPT LOADED",
-	Content = "script carregado!",
-	Image = "rbxassetid://4483345998",
-	Time = 12
+    Name = "SCRIPT LOADED",
+    Content = "script carregado!",
+    Image = "rbxassetid://4483345998",
+    Time = 12
 })
 
 FarmTab:AddToggle({
-	Name = "Yellow Orb",
-	Default = false,
-	Callback = function(Value)
-		print(Value)
+    Name = "Yellow Orb",
+    Default = false,
+    Callback = function(Value)
+        print(Value)
 
-if Value == true then
-local on = true -- Altere para true para ativar o código
+        local args = {
+            [1] = "collectOrb",
+            [2] = "Yellow Orb",
+            [3] = "City"
+        }
 
-if on then
-    game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("orbEvent"):FireServer(unpack(args))
-end
-
-local args = {
-    [1] = "collectOrb",
-    [2] = "Yellow Orb",
-    [3] = "City"
-}
-
-
-
-if Value == false then
-local on = false -- Altere para true para ativar o código
-
-if on then
-    game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("orbEvent"):FireServer(unpack(args))
-end
-
-local args = {
-    [1] = "collectOrb",
-    [2] = "Yellow Orb",
-    [3] = "City"
-}
-
-
-
+        if Value then
+            game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("orbEvent"):FireServer(unpack(args))
+        else
+            -- Se você deseja fazer algo quando o toggle estiver desativado, adicione aqui.
+        end
+    end
+})
